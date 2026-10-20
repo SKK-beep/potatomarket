@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Potato Farmers Market — MVP Preview</title>
+<style>
+:root{--green:#246b3b;--green2:#eaf5ec;--ink:#1c2b21;--muted:#637168;--line:#dce6de;--bg:#f6f8f6;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:var(--green);color:#fff;padding:20px max(20px,calc((100% - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.15rem}header small{opacity:.85;display:block;font-weight:400}
+nav{display:flex;gap:8px;flex-wrap:wrap}nav button{border:1px solid #ffffff55;color:#fff;background:transparent;border-radius:9px;padding:9px 12px;cursor:pointer}nav button.active{background:#fff;color:var(--green)}
+main{max-width:1100px;margin:24px auto;padding:0 16px}.hero{background:linear-gradient(120deg,#e8f4e9,#fff);border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:20px}.hero h1{font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.1;margin:0 0 12px}.hero p{max-width:720px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}.card,.panel{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px}.card strong{font-size:1.4rem;display:block}.muted{color:var(--muted);font-size:.92rem}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tabs button,.primary,.secondary{border:0;border-radius:9px;padding:10px 14px;cursor:pointer;font-weight:650}.tabs button{background:#e8eee9;color:var(--ink)}.tabs button.active,.primary{background:var(--green);color:#fff}.secondary{background:var(--green2);color:var(--green)}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-weight:650;font-size:.92rem}input,select,textarea{width:100%;padding:11px;border:1px solid #cbd8ce;border-radius:8px;background:#fff;font:inherit;color:var(--ink)}input[type=radio],input[type=checkbox]{width:auto}fieldset{border:1px solid var(--line);border-radius:10px;padding:12px}legend{font-weight:700;padding:0 5px}.inline{display:flex;gap:14px;flex-wrap:wrap}.inline label{font-weight:500}.notice{background:#fff7df;border:1px solid #eadba6;padding:12px;border-radius:9px;font-size:.9rem}.listing{display:grid;grid-template-columns:96px 1fr;gap:14px;border:1px solid var(--line);padding:12px;border-radius:12px;margin:10px 0;background:#fff}.photo{height:94px;background:#e7f1e8;border-radius:9px;display:grid;place-items:center;font-size:2rem}.price{color:var(--green);font-size:1.25rem;font-weight:800}.pill{display:inline-block;background:var(--green2);color:var(--green);border-radius:20px;padding:3px 9px;font-size:.8rem;font-weight:700}.hidden{display:none}h2{margin-top:0}footer{max-width:1100px;margin:35px auto;padding:20px 16px;color:var(--muted);font-size:.85rem}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}header{align-items:flex-start}.listing{grid-template-columns:75px 1fr}.photo{height:75px}}
+</style>
+</head>
+<body>
+<header><div class="brand">🥔 Potato Farmers Market<small>Connect farmers, buyers and seed suppliers</small></div>
+<nav><button class="active" data-view="home">Home</button><button data-view="sell">Post listing</button><button data-view="request">Buyer enquiries</button><button data-view="prices">Prices & trends</button><button data-view="forecast">Predictions</button></nav></header>
+<main>
+<section id="home" class="view">
+<div class="hero"><h1>Find potatoes. Find buyers. Make informed decisions.</h1><p>A mobile-friendly marketplace concept for ware potatoes and seed potatoes, with local bag units, buyer requests, market prices and community forecasts.</p><button class="primary" onclick="showView('sell')">Post potatoes</button> <button class="secondary" onclick="showView('request')">Post buyer enquiry</button></div>
+<div class="cards"><div class="card">🧺 <strong>Marketplace</strong><span class="muted">Browse listings by variety, quantity, location and price.</span></div><div class="card">🌱 <strong>Seed details</strong><span class="muted">Record generation/class and upload supporting evidence.</span></div><div class="card">📈 <strong>Price trends</strong><span class="muted">Track admin-published prices and community expectations.</span></div></div>
+<h2>Recent example listings</h2>
+<div class="listing"><div class="photo">🥔</div><div><span class="pill">Ware potatoes</span><h3>Shangi potatoes</h3><div class="price">KSh 2,450 / 70 kg bag</div><div class="muted">Illustrative listing · Molo, Nakuru · 80 bags</div></div></div>
+<div class="listing"><div class="photo">🌱</div><div><span class="pill">Seed potatoes · C1 (seller-stated)</span><h3>Unica seed potatoes</h3><div class="price">KSh 3,200 / 70 kg bag</div><div class="muted">Illustrative listing · Nakuru County · Evidence pending review</div></div></div>
+<div class="notice">This is a clickable front-end prototype using sample data. It does not yet create accounts, save submissions to a server, verify certificates, or process M-Pesa payments.</div>
+</section>
+
+<section id="sell" class="view hidden">
+<h1>Post a seller listing</h1><p class="muted">All fields marked * are required. Use the local bag name used in your market; the kilogram weight is stored separately.</p>
+<div class="layout"><div class="panel"><form id="sellerForm"><div class="formgrid">
+<div class="field full"><label>Listing type *</label><select id="kind"><option value="Ware potatoes">Ware potatoes (for consumption)</option><option value="Seed potatoes">Seed potatoes (for planting)</option></select></div>
+<div class="field"><label>Variety *</label><select id="variety"><option>Shangi</option><option>Unica</option><option>Dutch Robjin</option><option>Markies</option><option>Other</option></select></div>
+<div class="field seedOnly"><label>Seed generation / class *</label><select id="generation"><option>C1</option><option>C2</option><option>Other — specify in notes</option><option>Not sure / unverified</option></select></div>
+<div class="field"><label>Quantity type *</label><select id="qtyType"><option value="bags">Number of bags</option><option value="tonnes">Tonnes</option><option value="kg">Kilograms</option><option value="acres">Acres harvested</option></select></div>
+<div class="field bagOnly"><label>Weight per bag *</label><select id="bagWeight"><option value="70">70 kg</option><option value="90">90 kg</option><option value="custom">Other weight</option></select></div>
+<div class="field bagOnly"><label>Common/local bag name *</label><input id="bagName" placeholder="e.g. local market name" required></div>
+<div class="field"><label>Quantity available *</label><input id="quantity" type="number" min="0.01" step="any" required placeholder="e.g. 80"></div>
+<div class="field"><label>Price amount (KSh) *</label><input id="price" type="number" min="0" step="any" required placeholder="e.g. 2450"></div>
+<div class="field"><label>Price is for *</label><select id="priceBasis"><option value="per bag">Per bag</option><option value="per kg">Per kg</option><option value="per tonne">Per tonne</option><option value="total lot">Entire lot</option></select></div>
+<div class="field"><label>County / town / market *</label><input id="location" required placeholder="e.g. Molo, Nakuru County"></div>
+<div class="field"><label>Contact phone *</label><input id="phone" type="tel" required placeholder="+254..."></div>
+<div class="field"><label>Available until</label><input id="expiry" type="date"></div>
+<div class="field full"><label>Photos of potatoes *</label><input id="photos" type="file" accept="image/*" multiple required></div>
+<div class="field full seedOnly"><label>Seed certification / label evidence (where applicable)</label><input id="evidence" type="file" accept="image/*,.pdf" multiple><span class="muted">Upload labels or documents. Uploading evidence does not automatically mean it is verified.</span></div>
+<div class="field full"><label>Additional details</label><textarea id="notes" rows="3" placeholder="Harvest date, delivery, certification details, other bag size..."></textarea></div>
+</div><p class="notice">Seed class/generation and certification must be reviewed. Photos alone are not proof of certification.</p><button class="primary" type="submit">Preview listing</button></form></div>
+<div class="panel"><h2>Listing preview</h2><div id="sellerPreview" class="muted">Complete the form and choose Preview listing. The preview is local to this browser.</div></div></div>
+</section>
+
+<section id="request" class="view hidden">
+<h1>Post a buyer enquiry</h1><p class="muted">Tell sellers exactly what you need. Phone numbers should be verified before publication in the live service.</p>
+<div class="layout"><div class="panel"><form id="buyerForm"><div class="formgrid">
+<div class="field full"><label>What do you need? *</label><select id="bKind"><option value="Ware potatoes">Ware potatoes</option><option value="Seed potatoes">Seed potatoes</option></select></div>
+<div class="field"><label>Variety *</label><select id="bVariety"><option>Shangi</option><option>Unica</option><option>Dutch Robjin</option><option>Markies</option><option>Any suitable variety</option></select></div>
+<div class="field bSeed"><label>Required seed generation / class</label><select id="bGeneration"><option>C1</option><option>C2</option><option>Either C1 or C2</option><option>Other / discuss with supplier</option></select></div>
+<div class="field"><label>Quantity unit *</label><select id="bUnit"><option value="bags">Bags</option><option value="tonnes">Tonnes</option><option value="kg">Kilograms</option></select></div>
+<div class="field bBag"><label>Weight per bag *</label><select id="bWeight"><option value="70">70 kg</option><option value="90">90 kg</option><option value="custom">Other weight (specify in notes)</option></select></div>
+<div class="field"><label>Quantity required *</label><input id="bQty" type="number" min="0.01" step="any" required placeholder="e.g. 200"></div>
+<div class="field"><label>Maximum price (KSh)</label><input id="bPrice" type="number" min="0" step="any" placeholder="per bag / unit"></div>
+<div class="field"><label>Price basis</label><select id="bBasis"><option>Per bag</option><option>Per kg</option><option>Per tonne</option><option>Negotiable</option></select></div>
+<div class="field"><label>Delivery / collection location *</label><input id="bLocation" required placeholder="County, town or market"></div>
+<div class="field"><label>Contact phone *</label><input id="bPhone" required type="tel" placeholder="+254..."></div>
+<div class="field"><label>Needed by *</label><input id="bDeadline" type="date" required></div>
+<div class="field full"><label>Other requirements</label><textarea id="bNotes" rows="3" placeholder="Delivery, quality, certification, bag name, etc."></textarea></div>
+</div><button class="primary" type="submit">Preview enquiry</button></form></div>
+<div class="panel"><h2>Enquiry preview</h2><div id="buyerPreview" class="muted">Complete the form to preview your request.</div></div></div>
+</section>
+
+<section id="prices" class="view hidden">
+<h1>Potato prices & trends</h1><p class="muted">Example admin-published data only. Live prices must be dated, market-specific and sourced.</p>
+<div class="panel"><table style="width:100%;border-collapse:collapse"><thead><tr><th align="left">Variety</th><th align="left">Market</th><th align="left">Previous</th><th align="left">Current</th><th align="left">Trend</th></tr></thead><tbody>
+<tr><td>Shangi</td><td>Molo</td><td>KSh 30/kg</td><td>KSh 35/kg</td><td>↗ Up</td></tr><tr><td>Unica</td><td>Nakuru</td><td>KSh 28/kg</td><td>KSh 26/kg</td><td>↘ Down</td></tr><tr><td>Markies</td><td>Nyahururu</td><td>KSh 31/kg</td><td>KSh 31/kg</td><td>→ Stable</td></tr>
+</tbody></table><p class="muted">The production version should let admins add observations and display 7-day, 30-day, 3-month and 12-month charts.</p></div>
+</section>
+
+<section id="forecast" class="view hidden">
+<h1>Community price predictions</h1><p class="muted">This demo calculates a submitted estimate only. It does not yet save forecasts or create an AI/model-based forecast.</p>
+<div class="panel" style="max-width:650px"><form id="forecastForm"><div class="formgrid">
+<div class="field"><label>Variety</label><select id="fVariety"><option>Shangi</option><option>Unica</option><option>Dutch Robjin</option><option>Markies</option></select></div>
+<div class="field"><label>Market</label><input id="fMarket" value="Molo"></div>
+<div class="field"><label>Current price (KSh/kg)</label><input id="fCurrent" type="number" min="0.01" value="35" required></div>
+<div class="field"><label>Predicted price (KSh/kg)</label><input id="fPredicted" type="number" min="0" value="40" required></div>
+<div class="field full"><label>Forecast horizon</label><select id="fHorizon"><option>2 weeks</option><option>1 month</option><option>3 months</option></select></div>
+</div><button class="primary" type="submit">Calculate my estimate</button></form><div id="forecastResult" style="margin-top:16px"></div></div>
+<div class="notice" style="margin-top:14px">The live version should separately display community consensus (average/median, rise/fall/stable counts, unique farmers) and a data-driven forecast. Show actual outcomes later to measure accuracy.</div>
+</section>
+</main>
+<footer>Potato Farmers Market · Prototype only. No real accounts, data persistence, paid access, certification verification or payment processing is active.</footer>
+<script>
+function showView(id){document.querySelectorAll('.view').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+function toggleSeller(){let seed=document.getElementById('kind').value==='Seed potatoes';document.querySelectorAll('.seedOnly').forEach(x=>x.classList.toggle('hidden',!seed));let bags=document.getElementById('qtyType').value==='bags';document.querySelectorAll('.bagOnly').forEach(x=>x.classList.toggle('hidden',!bags));document.getElementById('bagName').required=bags;document.getElementById('photos').required=true}
+document.getElementById('kind').addEventListener('change',toggleSeller);document.getElementById('qtyType').addEventListener('change',toggleSeller);toggleSeller();
+function toggleBuyer(){let seed=document.getElementById('bKind').value==='Seed potatoes';document.querySelectorAll('.bSeed').forEach(x=>x.classList.toggle('hidden',!seed));let bags=document.getElementById('bUnit').value==='bags';document.querySelectorAll('.bBag').forEach(x=>x.classList.toggle('hidden',!bags))}
+document.getElementById('bKind').addEventListener('change',toggleBuyer);document.getElementById('bUnit').addEventListener('change',toggleBuyer);toggleBuyer();
+document.getElementById('sellerForm').addEventListener('submit',e=>{e.preventDefault();let kind=document.getElementById('kind').value,unit=document.getElementById('qtyType').value,qty=document.getElementById('quantity').value,weight=document.getElementById('bagWeight').value;let price=document.getElementById('price').value,basis=document.getElementById('priceBasis').value;let detail=unit==='bags'?`${qty} bags · ${weight==='custom'?'custom weight':weight+' kg each'} · local name: ${document.getElementById('bagName').value}`:`${qty} ${unit}`;document.getElementById('sellerPreview').innerHTML=`<span class="pill">${kind}</span><h3>${document.getElementById('variety').value}</h3>${kind==='Seed potatoes'?`<p>Generation/class: ${document.getElementById('generation').value}</p>`:''}<p>${detail}</p><div class="price">KSh ${Number(price).toLocaleString()} (${basis})</div><p>Location: ${document.getElementById('location').value}</p><p>Contact: ${document.getElementById('phone').value}</p><p>Photos selected: ${document.getElementById('photos').files.length}</p><p class="muted">Preview only — not published.</p>`});
+document.getElementById('buyerForm').addEventListener('submit',e=>{e.preventDefault();let unit=document.getElementById('bUnit').value,qty=Number(document.getElementById('bQty').value),weight=Number(document.getElementById('bWeight').value);let amount=unit==='bags'?`${qty} bags × ${weight||'custom'} kg`:`${qty} ${unit}`;document.getElementById('buyerPreview').innerHTML=`<span class="pill">Buyer enquiry</span><h3>${document.getElementById('bVariety').value} · ${document.getElementById('bKind').value}</h3>${document.getElementById('bKind').value==='Seed potatoes'?`<p>Generation/class: ${document.getElementById('bGeneration').value}</p>`:''}<p>Quantity: ${amount}</p><p>Maximum price: KSh ${Number(document.getElementById('bPrice').value||0).toLocaleString()} (${document.getElementById('bBasis').value})</p><p>Location: ${document.getElementById('bLocation').value}</p><p>Needed by: ${document.getElementById('bDeadline').value}</p><p>Contact: ${document.getElementById('bPhone').value}</p><p class="muted">Preview only — not published.</p>`});
+document.getElementById('forecastForm').addEventListener('submit',e=>{e.preventDefault();let c=Number(document.getElementById('fCurrent').value),p=Number(document.getElementById('fPredicted').value),d=p-c,pc=d/c*100;document.getElementById('forecastResult').innerHTML=`<div class="card"><div class="muted">${document.getElementById('fVariety').value} · ${document.getElementById('fMarket').value} · ${document.getElementById('fHorizon').value}</div><strong>KSh ${p.toFixed(2)}/kg</strong><p>${d>0?'Predicted increase':d<0?'Predicted decrease':'No predicted change'} of KSh ${Math.abs(d).toFixed(2)}/kg (${pc.toFixed(1)}%).</p><small class="muted">Your entered estimate only; no community consensus or actual forecasting model is connected.</small></div>`});
+</script>
+</body></html>
